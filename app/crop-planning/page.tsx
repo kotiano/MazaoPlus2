@@ -59,12 +59,12 @@ export default function CropPlanningPage() {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="font-['Pacifico'] text-2xl text-green-600 cursor-pointer">FarmAI</Link>
+            <div className="font-[\'Pacifico\'] text-2xl text-green-600">Mazao+</div>
             <nav className="flex space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Home</Link>
               <Link href="/ai-diagnosis" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">AI Diagnosis</Link>
               <Link href="/weather" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Weather Insights</Link>
-              <Link href="/crop-planning" className="text-green-600 font-semibold cursor-pointer">Crop Planning</Link>
+              <Link href="/crop-planning" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Crop Planning</Link>
               <Link href="/community" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Community</Link>
               <Link href="/marketplace" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Marketplace</Link>
             </nav>
@@ -284,6 +284,48 @@ export default function CropPlanningPage() {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="font-[\'Pacifico\'] text-2xl text-green-400 mb-4">Mazao+</div>
+              <p className="text-gray-400">
+                Empowering farmers with AI-driven insights for sustainable and profitable agriculture.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Features</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/ai-diagnosis" className="hover:text-white cursor-pointer">AI Diagnosis</Link></li>
+                <li><Link href="/weather" className="hover:text-white cursor-pointer">Weather Insights</Link></li>
+                <li><Link href="/crop-planning" className="hover:text-white cursor-pointer">Crop Planning</Link></li>
+                <li><Link href="/marketplace" className="hover:text-white cursor-pointer">Marketplace</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Community</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/community" className="hover:text-white cursor-pointer">Farmer Forum</Link></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Expert Advice</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Knowledge Base</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>judekotiano@gmail.com</li>
+                <li>+254 790 594 967</li>
+                <li>24/7 Support Available</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Mazao+. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
