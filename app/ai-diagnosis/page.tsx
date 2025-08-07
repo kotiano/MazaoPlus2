@@ -77,21 +77,17 @@ export default function AIDiagnosisPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 py-4">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="font-['Pacifico'] text-xl sm:text-2xl text-green-600 cursor-pointer">Mazao+</Link>
-            <nav className="hidden md:flex space-x-8">
+            <div className="font-[\'Pacifico\'] text-2xl text-green-600">Mazao+</div>
+            <nav className="flex space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Home</Link>
-              <Link href="/ai-diagnosis" className="text-green-600 font-semibold cursor-pointer">AI Diagnosis</Link>
+              <Link href="/ai-diagnosis" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">AI Diagnosis</Link>
               <Link href="/weather" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Weather Insights</Link>
               <Link href="/crop-planning" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Crop Planning</Link>
               <Link href="/community" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Community</Link>
               <Link href="/marketplace" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Marketplace</Link>
             </nav>
-            {/* Mobile menu button */}
-            <button className="md:hidden p-2 rounded-lg hover:bg-gray-100">
-              <i className="ri-menu-line text-xl text-gray-700"></i>
-            </button>
           </div>
         </div>
       </header>
@@ -340,67 +336,44 @@ export default function AIDiagnosisPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 mt-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="font-['Pacifico'] text-2xl text-green-400 mb-4">Mazao+</div>
-              <p className="text-gray-300 text-sm">
-                Empowering farmers with AI-powered crop analysis, disease detection, and pest identification for better harvests.
+              <div className="font-[\'Pacifico\'] text-2xl text-green-400 mb-4">Mazao+</div>
+              <p className="text-gray-400">
+                Empowering farmers with AI-driven insights for sustainable and profitable agriculture.
               </p>
             </div>
-            
             <div>
-              <h3 className="font-semibold mb-4">AI Services</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/ai-diagnosis" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Disease Detection</Link></li>
-                <li><Link href="/ai-diagnosis" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Pest Identification</Link></li>
-                <li><Link href="/crop-planning" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Crop Planning</Link></li>
-                <li><Link href="/weather" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Weather Insights</Link></li>
+              <h4 className="font-bold mb-4">Features</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/ai-diagnosis" className="hover:text-white cursor-pointer">AI Diagnosis</Link></li>
+                <li><Link href="/weather" className="hover:text-white cursor-pointer">Weather Insights</Link></li>
+                <li><Link href="/crop-planning" className="hover:text-white cursor-pointer">Crop Planning</Link></li>
+                <li><Link href="/marketplace" className="hover:text-white cursor-pointer">Marketplace</Link></li>
               </ul>
             </div>
-            
             <div>
-              <h3 className="font-semibold mb-4">Community</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/community" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Expert Network</Link></li>
-                <li><Link href="/community" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Discussion Forums</Link></li>
-                <li><Link href="/marketplace" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Marketplace</Link></li>
-                <li><a href="#" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Success Stories</a></li>
+              <h4 className="font-bold mb-4">Community</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/community" className="hover:text-white cursor-pointer">Farmer Forum</Link></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Expert Advice</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Knowledge Base</a></li>
               </ul>
             </div>
-            
             <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Help Center</a></li>
-                <li><a href="#" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">Contact Us</a></li>
-                <li><a href="mailto:support@mazaoplus.com" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">support@mazaoplus.com</a></li>
-                <li><a href="tel:+1-800-MAZAO" className="text-gray-300 hover:text-green-400 transition-colors cursor-pointer">+1-800-MAZAO</a></li>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>judekotiano@gmail.com</li>
+                <li>+254 790 594 967</li>
+                <li>24/7 Support Available</li>
               </ul>
             </div>
           </div>
-          
-          <div className="border-t border-gray-700 pt-8 mt-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">
-                © 2024 Mazao+. All rights reserved.
-              </p>
-              <div className="flex space-x-6 mt-4 sm:mt-0">
-                <a href="#" className="text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
-                  <i className="ri-facebook-fill text-lg"></i>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
-                  <i className="ri-twitter-fill text-lg"></i>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
-                  <i className="ri-instagram-line text-lg"></i>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
-                  <i className="ri-youtube-fill text-lg"></i>
-                </a>
-              </div>
-            </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Mazao+. All rights reserved.</p>
           </div>
         </div>
       </footer>

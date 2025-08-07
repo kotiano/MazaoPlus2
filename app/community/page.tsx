@@ -10,65 +10,65 @@ export default function CommunityPage() {
   const discussions = [
     {
       id: 1,
-      title: "Dealing with corn borer infestation - need urgent advice",
-      author: "Mike Thompson",
-      location: "Nebraska",
-      time: "2 hours ago",
-      replies: 12,
+      title: "Dealing with stalk borer infestation - need urgent advice",
+      author: "Henry Sitati",
+      location: "Bungoma",
+      time: "9 days ago",
+      replies: 0,
       category: "Pest Control",
-      content: "I've noticed significant corn borer damage in my 40-acre field. The AI diagnosis confirmed it, but I need practical advice on treatment options. Has anyone dealt with this successfully?",
-      likes: 8
+      content: "I've noticed significant stalk borer damage in my 1-acre field. The AI diagnosis confirmed it, but I need practical advice on treatment options. Has anyone dealt with this successfully?",
+      likes: 2
     },
     {
       id: 2,
       title: "Soil pH levels dropping - organic solutions?",
-      author: "Sarah Chen",
-      location: "California",
-      time: "4 hours ago",
-      replies: 7,
+      author: "Donaldson Lusiki",
+      location: "Busia",
+      time: "4 days ago",
+      replies: 0,
       category: "Soil Health",
       content: "My soil test shows pH dropping from 6.8 to 6.2 over the past year. Looking for organic methods to raise it back up. Lime applications haven't been as effective as expected.",
-      likes: 15
+      likes: 1
     },
     {
       id: 3,
       title: "Weather forecast accuracy - which service do you trust?",
-      author: "Robert Johnson",
-      location: "Iowa",
-      time: "6 hours ago",
-      replies: 23,
+      author: "Ernest Otieno",
+      location: "Maseno",
+      time: "6 days ago",
+      replies: 0,
       category: "Weather",
-      content: "Been comparing different weather services for farming decisions. FarmAI's predictions have been 85% accurate for me. What's your experience with weather forecasting reliability?",
-      likes: 31
+      content: "Been comparing different weather services for farming decisions. Mazao+'s predictions have been 85% accurate for me. What's your experience with weather forecasting reliability?",
+      likes: 1
     }
   ];
 
   const experts = [
     {
-      name: "Dr. Emily Watson",
-      title: "Plant Pathologist",
-      specialization: "Crop Diseases",
-      location: "University of Iowa",
+      name: "Kotiano Jude",
+      title: "Data Scientist",
+      specialization: "Crop Diseases and Pests",
+      location: "Nairobi, Kenya",
       rating: 4.9,
-      responses: 156,
+      responses: 15,
       avatar: "https://readdy.ai/api/search-image?query=professional%20headshot%20of%20female%20agricultural%20scientist%20with%20short%20brown%20hair%2C%20lab%20coat%2C%20friendly%20smile%2C%20academic%20setting%2C%20professional%20portrait%20photography&width=100&height=100&seq=expert-1&orientation=squarish"
     },
     {
-      name: "Prof. David Miller",
+      name: "Urbanus Juma",
       title: "Soil Scientist",
       specialization: "Soil Health & Nutrition",
-      location: "Iowa State University",
+      location: "Nairobi, Kenya",
       rating: 4.8,
-      responses: 203,
+      responses: 20,
       avatar: "https://readdy.ai/api/search-image?query=professional%20headshot%20of%20male%20soil%20scientist%20with%20gray%20beard%2C%20outdoor%20field%20background%2C%20khaki%20shirt%2C%20confident%20expression%2C%20academic%20portrait&width=100&height=100&seq=expert-2&orientation=squarish"
     },
     {
-      name: "Lisa Rodriguez",
+      name: "Festus Mutuku",
       title: "Extension Agent",
       specialization: "Integrated Pest Management",
-      location: "Nebraska Extension",
+      location: "Kitui, Kenya",
       rating: 4.9,
-      responses: 178,
+      responses: 8,
       avatar: "https://readdy.ai/api/search-image?query=professional%20headshot%20of%20hispanic%20female%20extension%20agent%20with%20long%20dark%20hair%2C%20field%20jacket%2C%20warm%20smile%2C%20agricultural%20background%2C%20expert%20portrait&width=100&height=100&seq=expert-3&orientation=squarish"
     }
   ];
@@ -79,13 +79,13 @@ export default function CommunityPage() {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="font-['Pacifico'] text-2xl text-green-600 cursor-pointer">FarmAI</Link>
+            <div className="font-[\'Pacifico\'] text-2xl text-green-600">Mazao+</div>
             <nav className="flex space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Home</Link>
               <Link href="/ai-diagnosis" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">AI Diagnosis</Link>
               <Link href="/weather" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Weather Insights</Link>
               <Link href="/crop-planning" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Crop Planning</Link>
-              <Link href="/community" className="text-green-600 font-semibold cursor-pointer">Community</Link>
+              <Link href="/community" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Community</Link>
               <Link href="/marketplace" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Marketplace</Link>
             </nav>
           </div>
@@ -103,15 +103,15 @@ export default function CommunityPage() {
           {/* Stats */}
           <div className="grid grid-cols-4 gap-6 mb-8">
             <div className="bg-white rounded-lg p-6 text-center shadow-md">
-              <div className="text-3xl font-bold text-green-600 mb-2">12.5K</div>
+              <div className="text-3xl font-bold text-green-600 mb-2">90</div>
               <div className="text-gray-600">Active Farmers</div>
             </div>
             <div className="bg-white rounded-lg p-6 text-center shadow-md">
-              <div className="text-3xl font-bold text-blue-600 mb-2">3.2K</div>
+              <div className="text-3xl font-bold text-blue-600 mb-2">200</div>
               <div className="text-gray-600">Discussions</div>
             </div>
             <div className="bg-white rounded-lg p-6 text-center shadow-md">
-              <div className="text-3xl font-bold text-purple-600 mb-2">856</div>
+              <div className="text-3xl font-bold text-purple-600 mb-2">45</div>
               <div className="text-gray-600">Expert Answers</div>
             </div>
             <div className="bg-white rounded-lg p-6 text-center shadow-md">
@@ -305,7 +305,7 @@ export default function CommunityPage() {
                     <i className="ri-fire-line text-red-500 mr-3"></i>
                     <span className="font-medium">Drought Management Strategies</span>
                   </div>
-                  <span className="text-green-600 font-bold">156 posts</span>
+                  <span className="text-green-600 font-bold">2 posts</span>
                 </div>
                 
                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
@@ -313,7 +313,7 @@ export default function CommunityPage() {
                     <i className="ri-trending-up-line text-blue-500 mr-3"></i>
                     <span className="font-medium">Corn Price Predictions 2024</span>
                   </div>
-                  <span className="text-blue-600 font-bold">89 posts</span>
+                  <span className="text-blue-600 font-bold">3 posts</span>
                 </div>
                 
                 <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
@@ -321,7 +321,7 @@ export default function CommunityPage() {
                     <i className="ri-plant-line text-yellow-500 mr-3"></i>
                     <span className="font-medium">Cover Crop Success Stories</span>
                   </div>
-                  <span className="text-yellow-600 font-bold">73 posts</span>
+                  <span className="text-yellow-600 font-bold">2 posts</span>
                 </div>
                 
                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
@@ -329,7 +329,7 @@ export default function CommunityPage() {
                     <i className="ri-bug-line text-purple-500 mr-3"></i>
                     <span className="font-medium">Integrated Pest Management</span>
                   </div>
-                  <span className="text-purple-600 font-bold">64 posts</span>
+                  <span className="text-purple-600 font-bold">5 posts</span>
                 </div>
               </div>
             </div>
@@ -380,6 +380,48 @@ export default function CommunityPage() {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="font-[\'Pacifico\'] text-2xl text-green-400 mb-4">Mazao+</div>
+              <p className="text-gray-400">
+                Empowering farmers with AI-driven insights for sustainable and profitable agriculture.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Features</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/ai-diagnosis" className="hover:text-white cursor-pointer">AI Diagnosis</Link></li>
+                <li><Link href="/weather" className="hover:text-white cursor-pointer">Weather Insights</Link></li>
+                <li><Link href="/crop-planning" className="hover:text-white cursor-pointer">Crop Planning</Link></li>
+                <li><Link href="/marketplace" className="hover:text-white cursor-pointer">Marketplace</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Community</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/community" className="hover:text-white cursor-pointer">Farmer Forum</Link></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Expert Advice</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Knowledge Base</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>judekotiano@gmail.com</li>
+                <li>+254 790 594 967</li>
+                <li>24/7 Support Available</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Mazao+. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
