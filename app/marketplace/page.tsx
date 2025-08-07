@@ -8,58 +8,58 @@ export default function MarketplacePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const categories = [
-    { id: 'equipment', name: 'Farm Equipment', icon: 'ri-truck-line', count: 245 },
-    { id: 'seeds', name: 'Seeds & Plants', icon: 'ri-seedling-line', count: 189 },
-    { id: 'fertilizers', name: 'Fertilizers', icon: 'ri-flask-line', count: 156 },
-    { id: 'tools', name: 'Hand Tools', icon: 'ri-hammer-line', count: 203 },
-    { id: 'livestock', name: 'Livestock', icon: 'ri-horse-line', count: 78 },
-    { id: 'produce', name: 'Fresh Produce', icon: 'ri-apple-line', count: 134 }
+    { id: 'equipment', name: 'Farm Equipment', icon: 'ri-truck-line', count: 2 },
+    { id: 'seeds', name: 'Seeds & Plants', icon: 'ri-seedling-line', count: 0 },
+    { id: 'fertilizers', name: 'Fertilizers', icon: 'ri-flask-line', count: 0 },
+    { id: 'tools', name: 'Hand Tools', icon: 'ri-hammer-line', count: 0 },
+    { id: 'livestock', name: 'Livestock', icon: 'ri-horse-line', count: 0 },
+    { id: 'produce', name: 'Fresh Produce', icon: 'ri-apple-line', count: 0 }
   ];
 
   const listings = {
     equipment: [
       {
         id: 1,
-        title: "John Deere X300 Lawn Tractor",
-        price: 2850,
-        location: "Cedar Rapids, IA",
-        seller: "Farm Supply Co.",
-        rating: 4.8,
+        title: "Jembe",
+        price: 200,
+        location: "Bungoma, Kenya",
+        seller: "Donalson Lusiki",
+        rating: 4.9,
         image: "https://readdy.ai/api/search-image?query=john%20deere%20green%20lawn%20tractor%20mower%20in%20farm%20setting%2C%20agricultural%20equipment%2C%20outdoor%20machinery%2C%20professional%20product%20photography%2C%20rural%20background&width=300&height=200&seq=tractor-1&orientation=landscape",
-        condition: "Excellent",
-        description: "Well-maintained lawn tractor with 42-inch cutting deck. Perfect for small to medium farms."
+        condition: "New",
+        description: "Good Quality Jembe. Perfect for small to medium farms."
       },
       {
         id: 2,
-        title: "Case IH Combine Harvester 2020",
-        price: 185000,
-        location: "Des Moines, IA",
-        seller: "AgriMax Equipment",
+        title: "KnapSackSpayer",
+        price: 1200,
+        location: "Bungoma, Kenya",
+        seller: "Donaldson Lusiki",
         rating: 4.9,
         image: "https://readdy.ai/api/search-image?query=red%20case%20ih%20combine%20harvester%20in%20wheat%20field%2C%20large%20agricultural%20machinery%2C%20harvest%20season%2C%20professional%20farm%20equipment%20photography&width=300&height=200&seq=combine-1&orientation=landscape",
-        condition: "Like New",
+        condition: "New",
         description: "Low hours, excellent condition. Includes latest precision agriculture technology package."
       }
     ],
     seeds: [
       {
         id: 3,
-        title: "Organic Corn Seed - 50lb Bag",
-        price: 125,
-        location: "Ames, IA",
-        seller: "Heritage Seeds",
-        rating: 4.7,
+        title: "Maize Seeds - 2kg Pack",
+        price: 450,
+        location: "Bungoma, Kenya",
+        seller: "Donaldson Lusiki",
+        rating: 4.9,
         image: "https://readdy.ai/api/search-image?query=organic%20corn%20seeds%20in%20burlap%20sack%2C%20golden%20yellow%20kernels%2C%20agricultural%20seed%20bag%2C%20farm%20supply%20photography%2C%20natural%20background&width=300&height=200&seq=corn-seeds&orientation=landscape",
         condition: "New",
-        description: "High-yield organic corn variety. Non-GMO, drought resistant, excellent germination rate."
+        description: "High-yield maize variety. Non-GMO, drought resistant, excellent germination rate."
       },
       {
         id: 4,
-        title: "Tomato Seedlings - Premium Variety",
-        price: 45,
-        location: "Iowa City, IA",
-        seller: "Green Valley Nursery",
-        rating: 4.6,
+        title: "Tomato Seedlings ",
+        price: 5,
+        location: "Bungoma, Kenya",
+        seller: "Donalson Lusiki",
+        rating: 4.9,
         image: "https://readdy.ai/api/search-image?query=healthy%20green%20tomato%20seedlings%20in%20nursery%20trays%2C%20young%20tomato%20plants%2C%20greenhouse%20setting%2C%20agricultural%20plant%20nursery%20photography&width=300&height=200&seq=tomato-seedlings&orientation=landscape",
         condition: "New",
         description: "24 premium tomato seedlings. Disease resistant varieties, ready for transplanting."
@@ -69,16 +69,16 @@ export default function MarketplacePage() {
 
   const featuredDeals = [
     {
-      title: "20% Off All Fertilizers",
+      title: "10% Off All Fertilizers",
       description: "Limited time offer on organic and synthetic fertilizers",
-      discount: "20% OFF",
-      endDate: "Dec 31, 2024"
+      discount: "10% OFF",
+      endDate: "Dec 31, 2025"
     },
     {
-      title: "Free Delivery on Orders Over $500",
+      title: "Free Delivery on Orders Over ksh 1,000",
       description: "Get free delivery for qualifying equipment purchases",
       discount: "FREE SHIPPING",
-      endDate: "Jan 15, 2025"
+      endDate: "Jan 15, 2026"
     }
   ];
 
@@ -88,14 +88,14 @@ export default function MarketplacePage() {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="font-['Pacifico'] text-2xl text-green-600 cursor-pointer">FarmAI</Link>
+            <div className="font-[\'Pacifico\'] text-2xl text-green-600">Mazao+</div>
             <nav className="flex space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Home</Link>
               <Link href="/ai-diagnosis" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">AI Diagnosis</Link>
               <Link href="/weather" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Weather Insights</Link>
               <Link href="/crop-planning" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Crop Planning</Link>
               <Link href="/community" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Community</Link>
-              <Link href="/marketplace" className="text-green-600 font-semibold cursor-pointer">Marketplace</Link>
+              <Link href="/marketplace" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Marketplace</Link>
             </nav>
           </div>
         </div>
@@ -190,7 +190,7 @@ export default function MarketplacePage() {
             <div className="lg:col-span-3">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 capitalize">
-                  {activeCategory.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                  {activeCategory.replace(/([A-Z])/g, ' ksh 1').replace(/^./, str => str.toUpperCase())}
                 </h2>
                 <div className="flex items-center space-x-4">
                   <span className="text-gray-600">
@@ -225,7 +225,7 @@ export default function MarketplacePage() {
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
                       
                       <div className="flex items-center justify-between mb-4">
-                        <div className="text-2xl font-bold text-green-600">${item.price.toLocaleString()}</div>
+                        <div className="text-2xl font-bold text-green-600">ksh{item.price.toLocaleString()}</div>
                         <div className="text-gray-500 text-sm">{item.location}</div>
                       </div>
                       
@@ -280,6 +280,48 @@ export default function MarketplacePage() {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="font-[\'Pacifico\'] text-2xl text-green-400 mb-4">Mazao+</div>
+              <p className="text-gray-400">
+                Empowering farmers with AI-driven insights for sustainable and profitable agriculture.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Features</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/ai-diagnosis" className="hover:text-white cursor-pointer">AI Diagnosis</Link></li>
+                <li><Link href="/weather" className="hover:text-white cursor-pointer">Weather Insights</Link></li>
+                <li><Link href="/crop-planning" className="hover:text-white cursor-pointer">Crop Planning</Link></li>
+                <li><Link href="/marketplace" className="hover:text-white cursor-pointer">Marketplace</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Community</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><Link href="/community" className="hover:text-white cursor-pointer">Farmer Forum</Link></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Expert Advice</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Success Stories</a></li>
+                <li><a href="#" className="hover:text-white cursor-pointer">Knowledge Base</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4">Contact</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>judekotiano@gmail.com</li>
+                <li>+254 790 594 967</li>
+                <li>24/7 Support Available</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2024 Mazao+. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
