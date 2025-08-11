@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -12,59 +11,60 @@ export default function AIDiagnosisPage() {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      // Basic client-side validation
+      if (!file.type.startsWith('image/')) {
+        setDiagnosis({ error: 'Please upload an image file (jpg, jpeg, or png)' });
+        return;
+      }
+      setSelectedFile(file);
       setDiagnosis(null); // Reset diagnosis when new file is uploaded
     }
   };
 
   const handleAnalyze = async () => {
     if (!selectedFile) return;
-    
+
     setIsAnalyzing(true);
-    
-    // Simulate AI analysis based on type
-    setTimeout(() => {
-      if (analysisType === 'pest') {
-        setDiagnosis({
-          pest: "Aphids (Aphididae)",
-          confidence: 91,
-          severity: "High",
-          description: "Aphids are small, soft-bodied insects that feed on plant sap. They can cause significant damage by weakening plants and transmitting viral diseases.",
-          treatment: [
-            "Apply insecticidal soap spray immediately",
-            "Introduce beneficial insects like ladybugs",
-            "Use neem oil for organic treatment",
-            "Remove heavily infested plant parts"
-          ],
-          prevention: [
-            "Regular monitoring of plants",
-            "Encourage natural predators",
-            "Avoid over-fertilizing with nitrogen",
-            "Use reflective mulches to deter aphids"
-          ]
-        });
-      } else {
-        setDiagnosis({
-          disease: "Early Blight (Alternaria solani)",
-          confidence: 94,
-          severity: "Moderate",
-          description: "Early blight is a common fungal disease affecting tomatoes and potatoes. It appears as dark spots with concentric rings on older leaves.",
-          treatment: [
-            "Remove affected leaves immediately",
-            "Apply copper-based fungicide spray",
-            "Improve air circulation around plants",
-            "Avoid overhead watering"
-          ],
-          prevention: [
-            "Use resistant varieties",
-            "Practice crop rotation",
-            "Maintain proper plant spacing",
-            "Apply preventive fungicide treatments"
-          ]
-        });
+
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const endpoint =
+        analysisType === 'pest'
+          ? 'http://localhost:8000/v1/predict/pest'
+          : 'http://localhost:8000/v1/predict/disease';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
       }
+
+      const result = await response.json();
+
+      // Map backend response to frontend diagnosis format
+      setDiagnosis({
+        [analysisType]: result[analysisType], // pest or disease
+        confidence: parseFloat(result.confidence) * 100, // Convert to percentage
+        severity: parseFloat(result.confidence) >= 0.9 ? 'High' : parseFloat(result.confidence) >= 0.7 ? 'Moderate' : 'Low',
+        description: result.message || `Detected ${result[analysisType]}.`,
+        treatment: result.recommendation.split('; ').filter(Boolean), // Split recommendation into array
+        prevention: [], // Add prevention tips if provided by backend
+      });
+    } catch (error: any) {
+      console.error('Error during analysis:', error);
+      setDiagnosis({
+        error: error.message || 'Failed to analyze the image. Please try again.',
+      });
+    } finally {
       setIsAnalyzing(false);
-    }, 3000);
+    }
   };
 
   const resetForm = () => {
@@ -79,7 +79,7 @@ export default function AIDiagnosisPage() {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="font-[\'Pacifico\'] text-2xl text-green-600">Mazao+</div>
+            <div className="font-['Pacifico'] text-2xl text-green-600">Mazao+</div>
             <nav className="flex space-x-8">
               <Link href="/" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">Home</Link>
               <Link href="/ai-diagnosis" className="text-gray-700 hover:text-green-600 transition-colors cursor-pointer">AI Diagnosis</Link>
@@ -140,7 +140,7 @@ export default function AIDiagnosisPage() {
               <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
                 Upload Crop Image for {analysisType === 'pest' ? 'Pest' : 'Disease'} Detection
               </h2>
-              
+
               {!selectedFile ? (
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center hover:border-green-500 transition-colors">
                   <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -177,7 +177,7 @@ export default function AIDiagnosisPage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <button
                     onClick={handleAnalyze}
                     disabled={isAnalyzing}
@@ -192,7 +192,7 @@ export default function AIDiagnosisPage() {
                       `Analyze for ${analysisType === 'pest' ? 'Pests' : 'Diseases'}`
                     )}
                   </button>
-                  
+
                   <button
                     onClick={resetForm}
                     className="w-full border border-gray-300 text-gray-700 px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-gray-50 transition-colors whitespace-nowrap text-sm sm:text-base"
@@ -219,7 +219,7 @@ export default function AIDiagnosisPage() {
               <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
                 {analysisType === 'pest' ? 'Pest Detection Results' : 'Disease Diagnosis Results'}
               </h2>
-              
+
               {!diagnosis && !isAnalyzing && (
                 <div className="text-center py-8 sm:py-12">
                   <div className="w-12 sm:w-16 h-12 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -245,62 +245,78 @@ export default function AIDiagnosisPage() {
 
               {diagnosis && (
                 <div className="space-y-6">
-                  {/* Pest/Disease Info */}
-                  <div className="border-l-4 border-red-500 pl-4">
-                    <h3 className="text-lg sm:text-xl font-bold text-red-600">
-                      {diagnosis.pest || diagnosis.disease}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
-                      <span className="bg-green-100 text-green-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                        {diagnosis.confidence}% Confidence
-                      </span>
-                      <span className="bg-orange-100 text-orange-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                        {diagnosis.severity} Severity
-                      </span>
+                  {/* Error Display */}
+                  {diagnosis.error && (
+                    <div className="bg-red-50 p-4 rounded-lg">
+                      <p className="text-sm sm:text-base text-red-800">
+                        <i className="ri-error-warning-line mr-1"></i>
+                        {diagnosis.error}
+                      </p>
                     </div>
-                    <p className="text-gray-600 mt-2 text-sm sm:text-base">{diagnosis.description}</p>
-                  </div>
+                  )}
 
-                  {/* Treatment */}
-                  <div>
-                    <h4 className="font-bold text-gray-800 mb-3 flex items-center text-sm sm:text-base">
-                      <i className="ri-medicine-bottle-line text-green-600 mr-2"></i>
-                      Recommended Treatment
-                    </h4>
-                    <ul className="space-y-2">
-                      {diagnosis.treatment.map((step: string, index: number) => (
-                        <li key={index} className="flex items-start">
-                          <span className="bg-green-100 text-green-600 w-5 sm:w-6 h-5 sm:h-6 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-3 mt-0.5 flex-shrink-0">
-                            {index + 1}
+                  {/* Pest/Disease Info */}
+                  {!diagnosis.error && (
+                    <>
+                      <div className="border-l-4 border-red-500 pl-4">
+                        <h3 className="text-lg sm:text-xl font-bold text-red-600">
+                          {diagnosis.pest || diagnosis.disease}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
+                          <span className="bg-green-100 text-green-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+                            {diagnosis.confidence}% Confidence
                           </span>
-                          <span className="text-gray-700 text-sm sm:text-base">{step}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                          <span className="bg-orange-100 text-orange-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+                            {diagnosis.severity} Severity
+                          </span>
+                        </div>
+                        <p className="text-gray-600 mt-2 text-sm sm:text-base">{diagnosis.description}</p>
+                      </div>
 
-                  {/* Prevention */}
-                  <div>
-                    <h4 className="font-bold text-gray-800 mb-3 flex items-center text-sm sm:text-base">
-                      <i className="ri-shield-check-line text-blue-600 mr-2"></i>
-                      Prevention Tips
-                    </h4>
-                    <ul className="space-y-2">
-                      {diagnosis.prevention.map((tip: string, index: number) => (
-                        <li key={index} className="flex items-start">
-                          <i className="ri-check-line text-blue-600 mr-2 mt-1 flex-shrink-0"></i>
-                          <span className="text-gray-700 text-sm sm:text-base">{tip}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                      {/* Treatment */}
+                      <div>
+                        <h4 className="font-bold text-gray-800 mb-3 flex items-center text-sm sm:text-base">
+                          <i className="ri-medicine-bottle-line text-green-600 mr-2"></i>
+                          Recommended Treatment
+                        </h4>
+                        <ul className="space-y-2">
+                          {diagnosis.treatment.map((step: string, index: number) => (
+                            <li key={index} className="flex items-start">
+                              <span className="bg-green-100 text-green-600 w-5 sm:w-6 h-5 sm:h-6 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-3 mt-0.5 flex-shrink-0">
+                                {index + 1}
+                              </span>
+                              <span className="text-gray-700 text-sm sm:text-base">{step}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <p className="text-xs sm:text-sm text-yellow-800">
-                      <i className="ri-information-line mr-1"></i>
-                      <strong>Note:</strong> This AI {analysisType === 'pest' ? 'pest detection' : 'diagnosis'} is for guidance only. For severe infestations or uncertain cases, consult with a local agricultural extension office or plant pathologist.
-                    </p>
-                  </div>
+                      {/* Prevention */}
+                      {diagnosis.prevention.length > 0 && (
+                        <div>
+                          <h4 className="font-bold text-gray-800 mb-3 flex items-center text-sm sm:text-base">
+                            <i className="ri-shield-check-line text-blue-600 mr-2"></i>
+                            Prevention Tips
+                          </h4>
+                          <ul className="space-y-2">
+                            {diagnosis.prevention.map((tip: string, index: number) => (
+                              <li key={index} className="flex items-start">
+                                <i className="ri-check-line text-blue-600 mr-2 mt-1 flex-shrink-0"></i>
+                                <span className="text-gray-700 text-sm sm:text-base">{tip}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div className="bg-yellow-50 p-4 rounded-lg">
+                        <p className="text-xs sm:text-sm text-yellow-800">
+                          <i className="ri-information-line mr-1"></i>
+                          <strong>Note:</strong> This AI {analysisType === 'pest' ? 'pest detection' : 'diagnosis'} is for guidance only. For severe infestations or uncertain cases, consult with a local agricultural extension office or plant pathologist.
+                        </p>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -340,7 +356,7 @@ export default function AIDiagnosisPage() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="font-[\'Pacifico\'] text-2xl text-green-400 mb-4">Mazao+</div>
+              <div className="font-['Pacifico'] text-2xl text-green-400 mb-4">Mazao+</div>
               <p className="text-gray-400">
                 Empowering farmers with AI-driven insights for sustainable and profitable agriculture.
               </p>

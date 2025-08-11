@@ -1,4 +1,4 @@
-// File: /home/jude/Downloads/mazao+/app/ai-diagnosis/page.tsx
+// File: /home/jude/Projects/mazao+/app/ai-diagnosis/page.tsx
 import * as entry from '../../../../app/ai-diagnosis/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

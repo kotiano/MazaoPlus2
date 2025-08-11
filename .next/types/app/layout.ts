@@ -1,4 +1,4 @@
-// File: /home/jude/Downloads/mazao+/app/layout.tsx
+// File: /home/jude/Projects/mazao+/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
