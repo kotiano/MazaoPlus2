@@ -1,10 +1,32 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
+
+// Define interfaces for type safety
+interface Reply {
+  id: number;
+  author: string;
+  content: string;
+  time: string;
+}
+
+interface Discussion {
+  id: number;
+  title: string;
+  author: string;
+  location: string;
+  time: string;
+  replies: Reply[];
+  category: string;
+  content: string;
+  likes: number;
+  createdAt: Date;
+}
 
 // Sample data
-const initialDiscussions = [
+const initialDiscussions: Discussion[] = [
   {
     id: 1,
     title: 'Dealing with stalk borer infestation - need urgent advice',
@@ -85,7 +107,7 @@ const categories = [
 
 export default function CommunityPage() {
   const [activeTab, setActiveTab] = useState('discussions');
-  const [discussions, setDiscussions] = useState(initialDiscussions);
+  const [discussions, setDiscussions] = useState<Discussion[]>(initialDiscussions);
   const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
     title: '',
@@ -97,7 +119,7 @@ export default function CommunityPage() {
   const [visibleDiscussions, setVisibleDiscussions] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [showExpertModal, setShowExpertModal] = useState(false);
-  const [selectedExpert, setSelectedExpert] = useState(null);
+  const [selectedExpert, setSelectedExpert] = useState<typeof experts[0] | null>(null);
   const [expertMessage, setExpertMessage] = useState('');
 
   // Memoized filtered discussions
@@ -113,61 +135,67 @@ export default function CommunityPage() {
   }, [discussions, searchQuery, visibleDiscussions]);
 
   // Handle form input changes
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleFormChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    },
+    []
+  );
 
   // Handle discussion submission
-  const handleSubmitPost = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError('');
-    setFormSuccess('');
-
-    // Validation
-    if (!formData.title || !formData.content || !formData.category) {
-      setFormError('Please fill in all required fields (Title, Category, Content).');
-      return;
-    }
-    if (formData.content.length > 500) {
-      setFormError('Content must be 500 characters or less.');
-      return;
-    }
-
-    // Create new discussion
-    const newDiscussion = {
-      id: Date.now(),
-      title: formData.title,
-      author: 'Current User', // Replace with actual user data in a real app
-      location: 'Unknown', // Replace with user location
-      time: 'Just now',
-      replies: [],
-      category: formData.category,
-      content: formData.content,
-      likes: 0,
-      createdAt: new Date(),
-    };
-
-    setDiscussions([newDiscussion, ...discussions]);
-    setFormData({ title: '', category: 'Crop Diseases', content: '' });
-    setFormSuccess('Discussion posted successfully!');
-    setTimeout(() => {
+  const handleSubmitPost = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      setFormError('');
       setFormSuccess('');
-      setActiveTab('discussions');
-    }, 1500);
-  };
+
+      // Validation
+      if (!formData.title || !formData.content || !formData.category) {
+        setFormError('Please fill in all required fields (Title, Category, Content).');
+        return;
+      }
+      if (formData.content.length > 500) {
+        setFormError('Content must be 500 characters or less.');
+        return;
+      }
+
+      // Create new discussion
+      const newDiscussion: Discussion = {
+        id: Date.now(),
+        title: formData.title,
+        author: 'Current User', // Replace with actual user data
+        location: 'Unknown', // Replace with user location
+        time: 'Just now',
+        replies: [],
+        category: formData.category,
+        content: formData.content,
+        likes: 0,
+        createdAt: new Date(),
+      };
+
+      setDiscussions([newDiscussion, ...discussions]);
+      setFormData({ title: '', category: 'Crop Diseases', content: '' });
+      setFormSuccess('Discussion posted successfully!');
+      setTimeout(() => {
+        setFormSuccess('');
+        setActiveTab('discussions');
+      }, 1500);
+    },
+    [formData, discussions]
+  );
 
   // Handle liking a discussion
-  const handleLike = (id: number) => {
+  const handleLike = useCallback((id: number) => {
     setDiscussions((prev) =>
       prev.map((discussion) =>
         discussion.id === id ? { ...discussion, likes: discussion.likes + 1 } : discussion
       )
     );
-  };
+  }, []);
 
   // Handle adding a reply
-  const handleReply = (discussionId: number, replyContent: string) => {
+  const handleReply = useCallback((discussionId: number, replyContent: string) => {
     if (!replyContent.trim()) return;
     setDiscussions((prev) =>
       prev.map((discussion) =>
@@ -187,45 +215,52 @@ export default function CommunityPage() {
           : discussion
       )
     );
-  };
+  }, []);
 
   // Handle loading more discussions
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
       setVisibleDiscussions((prev) => prev + 3);
       setIsLoading(false);
     }, 500);
-  };
+  }, []);
 
   // Handle contacting an expert
-  const handleContactExpert = (expert: any) => {
+  const handleContactExpert = useCallback((expert: typeof experts[0]) => {
     setSelectedExpert(expert);
     setShowExpertModal(true);
     setExpertMessage('');
     setFormError('');
     setFormSuccess('');
-  };
+  }, []);
 
   // Handle expert message submission
-  const handleExpertMessageSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!expertMessage.trim()) {
-      setFormError('Please enter a message.');
-      return;
-    }
-    // Simulate sending message (replace with actual API call)
-    console.log(`Message to ${selectedExpert.name}: ${expertMessage}`);
-    setFormSuccess(`Message sent to ${selectedExpert.name}!`);
-    setExpertMessage('');
-    setTimeout(() => {
-      setShowExpertModal(false);
-      setFormSuccess('');
-    }, 1500);
-  };
+  const handleExpertMessageSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!expertMessage.trim()) {
+        setFormError('Please enter a message.');
+        return;
+      }
+      // Simulate sending message (replace with actual API call)
+      console.log(`Message to ${selectedExpert?.name}: ${expertMessage}`);
+      setFormSuccess(`Message sent to ${selectedExpert?.name}!`);
+      setExpertMessage('');
+      setTimeout(() => {
+        setShowExpertModal(false);
+        setFormSuccess('');
+      }, 1500);
+    },
+    [expertMessage, selectedExpert]
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <NextSeo
+        title="Community - Mazao+"
+        description="Join the Mazao+ farming community to share knowledge and discuss best practices."
+      />
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-4">
@@ -378,7 +413,9 @@ export default function CommunityPage() {
                                 </span>
                                 <button
                                   className="text-green-600 hover:text-green-700 font-medium whitespace-nowrap"
-                                  onClick={() => document.getElementById(`replies-${discussion.id}`).scrollIntoView({ behavior: 'smooth' })}
+                                  onClick={() =>
+                                    document.getElementById(`replies-${discussion.id}`)?.scrollIntoView({ behavior: 'smooth' })
+                                  }
                                 >
                                   Join Discussion
                                 </button>
@@ -408,8 +445,8 @@ export default function CommunityPage() {
                                 onKeyDown={(e) => {
                                   if (e.key === 'Enter' && !e.shiftKey) {
                                     e.preventDefault();
-                                    handleReply(discussion.id, e.target.value);
-                                    e.target.value = '';
+                                    handleReply(discussion.id, (e.target as HTMLTextAreaElement).value);
+                                    (e.target as HTMLTextAreaElement).value = '';
                                   }
                                 }}
                               />
